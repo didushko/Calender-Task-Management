@@ -1,4 +1,4 @@
-import { getCalendarData, parseStringToDate } from "../../../lib/utils";
+import { convertToIsoDate, getCalendarData } from "../../../lib/utils";
 import { ICalendarProps } from "./Calendar";
 import View from "./View";
 import { getModeByValue } from "./ViewMode";
@@ -9,7 +9,7 @@ const CalendarGrid = async ({
   country,
   search,
 }: ICalendarProps) => {
-  const currentDate = parseStringToDate(date);
+  const currentDate = convertToIsoDate(date);
 
   const calendarData = await getCalendarData(
     currentDate,
@@ -17,10 +17,6 @@ const CalendarGrid = async ({
     country,
     search
   );
-  const forDebug = calendarData.map((week) =>
-    week.weekData.map((day) => day.dayData)
-  );
-  console.log("calendarData", forDebug);
   return (
     <View
       calendarData={calendarData}

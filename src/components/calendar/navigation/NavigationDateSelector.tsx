@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { formatDateToString, parseStringToDate } from "../../../../lib/utils";
+import { checkIsoStr } from "../../../../lib/utils";
 import { ViewMode } from "../ViewMode";
 import useStateInParam from "@/hooks/useParamChanger";
 
@@ -10,10 +10,7 @@ const NavigationDateSelector = ({
   date?: string;
   viewMode: ViewMode;
 }) => {
-  const [selectedDate, setDate] = useStateInParam(
-    "date",
-    formatDateToString(parseStringToDate(date))
-  );
+  const [selectedDate, setDate] = useStateInParam("date", checkIsoStr(date));
 
   return (
     <ChangersStyled>

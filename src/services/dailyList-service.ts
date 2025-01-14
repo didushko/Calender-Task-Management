@@ -21,9 +21,6 @@ class DailyListService extends DatabaseConnection {
     search?: string
   ): Promise<IDailyTaskList[]> {
     try {
-      const start = new Date(startDate.setHours(0, 0, 0, 0));
-      const end = new Date(endDate.setHours(23, 59, 59, 999));
-
       const populdateParams: mongoose.PopulateOptions = {
         path: "tasks.task",
         model: TaskModel,
@@ -37,8 +34,8 @@ class DailyListService extends DatabaseConnection {
       const dailyTaskLists = await dailyTaskListModel
         .find({
           date: {
-            $gte: start,
-            $lte: end,
+            $gte: startDate,
+            $lte: endDate,
           },
         })
         .populate(populdateParams);

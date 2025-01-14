@@ -68,11 +68,11 @@ class NagerDateService {
     endDate: Date,
     countryCode?: string,
     filter?: string
-  ): Promise<Map<string, PublicHoliday[] | null> | null> {
+  ): Promise<Map<number, PublicHoliday[] | null> | null> {
     try {
       const startYear = startDate.getFullYear();
       const endYear = endDate.getFullYear();
-      endDate = new Date(endDate.setHours(23, 59, 59, 999));
+      endDate.setUTCHours(23, 59, 59, 999);
 
       const years = Array.from(
         { length: endYear - startYear + 1 },
@@ -92,7 +92,7 @@ class NagerDateService {
         countryList.push({ countryCode: "UA" });
       }
 
-      const AllHolidays: Map<string, PublicHoliday[] | null> = new Map();
+      const AllHolidays: Map<number, PublicHoliday[] | null> = new Map();
 
       const holidayPromises = countryList.map((country) =>
         Promise.all(
@@ -110,13 +110,15 @@ class NagerDateService {
                 }
                 holidaysByCountry.forEach((holiday) => {
                   try {
-                    const day = new Date(holiday.date);
+                    const day = new Date(
+                      new Date(holiday.date + "T00:00:00.000Z")
+                    );
                     if (day >= startDate && day <= endDate) {
-                      const holidays = AllHolidays.get(holiday.date) || [];
+                      const holidays = AllHolidays.get(day.valueOf()) || [];
 
                       if (!holidays.some((h) => h.name === holiday.name)) {
                         holidays.push(holiday);
-                        AllHolidays.set(holiday.date, holidays);
+                        AllHolidays.set(day.valueOf(), holidays);
                       }
                     }
                   } catch (e: unknown) {

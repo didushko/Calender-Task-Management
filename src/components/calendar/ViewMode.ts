@@ -1,7 +1,6 @@
 import {
-  formatDateToString,
+  convertToIsoDate,
   generateDateGrid,
-  parseStringToDate,
 } from "../../../lib/utils";
 
 export interface ViewMode {
@@ -33,17 +32,17 @@ const modeList: ViewMode[] = [
     value: "default",
     label: "Month",
     getPrevDate: (date: string) => {
-      const nextDate = parseStringToDate(date);
+      const nextDate = convertToIsoDate(date);
       nextDate.setMonth(nextDate.getMonth() - 1);
-      return formatDateToString(nextDate);
+      return nextDate.toISOString();
     },
     getNextDate: (date: string) => {
-      const nextDate = parseStringToDate(date);
+      const nextDate = convertToIsoDate(date);
       nextDate.setMonth(nextDate.getMonth() + 1);
-      return formatDateToString(nextDate);
+       return nextDate.toISOString();
     },
     getDisplayDate: (dateStr: string) => {
-      const date = parseStringToDate(dateStr);
+      const date = convertToIsoDate(dateStr);
       return `${MONTH_NAMES[date.getMonth()]} ${date.getFullYear()}`;
     },
     getDateGrid: (date: Date) => generateDateGrid(date),
@@ -52,18 +51,18 @@ const modeList: ViewMode[] = [
     value: "week",
     label: "Week",
     getPrevDate: (date: string) => {
-      const nextDate = parseStringToDate(date);
+      const nextDate = convertToIsoDate(date);
       nextDate.setDate(nextDate.getDate() - 7);
-      return formatDateToString(nextDate);
+      return nextDate.toISOString();
     },
     getNextDate: (date: string) => {
-      const nextDate = parseStringToDate(date);
+      const nextDate = convertToIsoDate(date);
       nextDate.setDate(nextDate.getDate() + 7);
-      return formatDateToString(nextDate);
+      return nextDate.toISOString();
     },
 
     getDisplayDate: (dateStr: string) => {
-      const date = parseStringToDate(dateStr);
+      const date = convertToIsoDate(dateStr);
       const day = String(date.getDate()).padStart(2, "0");
       return `${day} ${MONTH_NAMES[date.getMonth()]} ${date.getFullYear()}`;
     },
@@ -73,18 +72,18 @@ const modeList: ViewMode[] = [
     value: "day",
     label: "Day",
     getPrevDate: (date: string) => {
-      const nextDate = parseStringToDate(date);
+      const nextDate = convertToIsoDate(date);
       nextDate.setDate(nextDate.getDate() - 1);
-      return formatDateToString(nextDate);
+      return nextDate.toISOString();
     },
     getNextDate: (date: string) => {
-      const nextDate = parseStringToDate(date);
+      const nextDate = convertToIsoDate(date);
       nextDate.setDate(nextDate.getDate() + 1);
-      return formatDateToString(nextDate);
+      return nextDate.toISOString();
     },
 
     getDisplayDate: (dateStr: string) => {
-      const date = parseStringToDate(dateStr);
+      const date = convertToIsoDate(dateStr);
       const day = String(date.getDate()).padStart(2, "0");
       return `${day} ${MONTH_NAMES[date.getMonth()]} ${date.getFullYear()}`;
     },

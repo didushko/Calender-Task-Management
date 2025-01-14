@@ -1,32 +1,24 @@
 import { CalendarData } from "@/components/calendar/View";
 import { ViewMode } from "@/components/calendar/ViewMode";
-import logger from "@/logger/logger";
 import dailyListService from "@/services/dailyList-service";
 import nagerDateService from "@/services/nagerDateService";
 
-const formatDateToString = (date: Date) => {
-  const day = String(date.getDate()).padStart(2, "0");
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const year = date.getFullYear();
-  return `${year}-${month}-${day}`;
-};
-const parseStringToDate = (dateString?: string) => {
-  try {
-    if (!dateString) {
-      throw new Error("Invalid date string");
-    }
-    const [year, month, day] = dateString.split("-").map(Number);
-    if (!day || !month || !year) {
-      throw new Error("Invalid date components");
-    }
-    return new Date(year, month - 1, day);
-  } catch (error: unknown) {
-    logger.error(`Error parsing date string '${dateString}' ${String(error)}`);
-    const currentDate = new Date();
-    currentDate.setHours(0, 0, 0, 0);
-    return currentDate;
+export function convertToIsoDate(str?: string) {
+  if (str && !isNaN(Date.parse(str))) {
+    return new Date(str);
+  } else {
+    return new Date();
   }
-};
+}
+
+export function checkIsoStr(str?: string) {
+  if (str && !isNaN(Date.parse(str))) {
+    const date = new Date(str);
+    return date.toISOString();
+  } else {
+    return new Date().toISOString();
+  }
+}
 
 export function generateDateGrid(date: Date, weekLimit: number = 6): Date[][] {
   const firstDayAtMonth = new Date(date.getFullYear(), date.getMonth(), 1);
@@ -70,6 +62,8 @@ const getCalendarData = async (
   const firstDate = viewData[0][0];
   const lastDate =
     viewData[viewData.length - 1][viewData[viewData.length - 1].length - 1];
+  firstDate.setUTCHours(0, 0, 0, 0);
+  lastDate.setUTCHours(0, 0, 0, 0);
   const dailyTasksList = await dailyListService.getDailyTaskLists(
     firstDate,
     lastDate,
@@ -83,13 +77,13 @@ const getCalendarData = async (
   const data = viewData.map((week, i1) => {
     const weekData = week.map((day, i2) => {
       const dayData = dailyTasksList.find(
-        (task) => task.date.toDateString() === day.toDateString()
+        (task) => task.date.valueOf() === day.valueOf()
       ) || {
-        _id: `${currentDate.toDateString()}_${i1}_${i2}`,
+        _id: `${currentDate.valueOf()}_${i1}_${i2}`,
         date: day,
         tasks: [],
       };
-      const holidays = holidaysData?.get(formatDateToString(day)) || [];
+      const holidays = holidaysData?.get(day.valueOf()) || [];
 
       const ids =
         dayData.tasks.reduce(
@@ -139,10 +133,4 @@ function generateShortHex(srt: string) {
   return hash.toString(36);
 }
 
-export {
-  formatDateToString,
-  parseStringToDate,
-  getCalendarData,
-  findDayDataById,
-  generateShortHex,
-};
+export { getCalendarData, findDayDataById, generateShortHex };
