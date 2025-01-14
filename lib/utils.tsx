@@ -10,16 +10,19 @@ const formatDateToString = (date: Date) => {
   const year = date.getFullYear();
   return `${year}-${month}-${day}`;
 };
-const parseStringToDate = (dateString?: string) => {
+const parseStringToDate = (dateString?: string | null) => {
   try {
     if (!dateString) {
       throw new Error("Invalid date string");
     }
-    const [year, month, day] = dateString.split("-").map(Number);
-    if (!day || !month || !year) {
+    const [value, offset] = dateString.split("T").map(Number);
+    if (!value || !offset) {
       throw new Error("Invalid date components");
     }
-    return new Date(year, month - 1, day);
+
+    const dateLocal = new Date(value);
+    const dateClient = new Date(dateLocal.valueOf() + offset * 60 * 1000);
+    return dateClient;
   } catch (error: unknown) {
     logger.error(`Error parsing date string '${dateString}' ${String(error)}`);
     const currentDate = new Date();
@@ -29,12 +32,11 @@ const parseStringToDate = (dateString?: string) => {
 };
 
 export function generateDateGrid(date: Date, weekLimit: number = 6): Date[][] {
-  const firstDayAtMonth = new Date(date.getFullYear(), date.getMonth(), 1);
-  const firstDayOfWeek = new Date(
-    date.getFullYear(),
-    date.getMonth(),
-    date.getDate() - date.getDay()
-  );
+  const firstDayAtMonth = new Date(date);
+  firstDayAtMonth.setDate(1);
+  const firstDayOfWeek = new Date(date);
+  firstDayOfWeek.setDate(date.getDate() - date.getDay());
+
   const startDate = weekLimit !== 6 ? firstDayOfWeek : firstDayAtMonth;
 
   const monthData = [];
@@ -61,15 +63,19 @@ export function generateDateGrid(date: Date, weekLimit: number = 6): Date[][] {
 }
 
 const getCalendarData = async (
-  currentDate: Date,
+  clientDate: string | undefined | null,
   viewMode: ViewMode,
   country?: string,
   search?: string
 ): Promise<CalendarData[]> => {
-  const viewData = viewMode.getDateGrid(currentDate);
-  const firstDate = viewData[0][0];
-  const lastDate =
-    viewData[viewData.length - 1][viewData[viewData.length - 1].length - 1];
+  const currentDate = parseStringToDate(clientDate);
+  const viewDates = viewMode.getDateGrid(currentDate);
+
+  const firstDate = new Date(viewDates[0][0]);
+  const lastDate = new Date(
+    viewDates[viewDates.length - 1][viewDates[viewDates.length - 1].length - 1]
+  );
+
   const dailyTasksList = await dailyListService.getDailyTaskLists(
     firstDate,
     lastDate,
@@ -80,22 +86,29 @@ const getCalendarData = async (
     lastDate,
     country
   );
-  const data = viewData.map((week, i1) => {
+  const data = viewDates.map((week, i1) => {
     const weekData = week.map((day, i2) => {
+      const dayMidnight = new Date(day);
+      dayMidnight.setUTCHours(0, 0, 0, 0);
       const dayData = dailyTasksList.find(
-        (task) => task.date.toDateString() === day.toDateString()
+        (task) => task.date.toUTCString() === dayMidnight.toUTCString()
       ) || {
-        _id: `${currentDate.toDateString()}_${i1}_${i2}`,
+        _id: `${currentDate.toDateString()}_${i1}_${i2}_${day.valueOf()}`,
         date: day,
         tasks: [],
       };
       const holidays = holidaysData?.get(formatDateToString(day)) || [];
 
-      const ids = dayData.tasks.reduce(
-        (add, task) => add + task._id + `${task.priority}`,
-        ""
-      );
-      const key = dayData.date.valueOf() + generateShortHex(ids) + search;
+      const ids =
+        dayData.tasks.reduce(
+          (add, task) => add + task._id + `${task.priority}`,
+          ""
+        ) + holidays.reduce((add, holiday) => add + holiday.name, "");
+      const key =
+        dayData.date.valueOf() +
+        generateShortHex(ids) +
+        viewMode.value +
+        search;
 
       return {
         dayData: { ...dayData, holidays },
@@ -112,10 +125,7 @@ const getCalendarData = async (
   return data;
 };
 
-function findDayDataById(
-  data: CalendarData[],
-  dayDataId: string
-) {
+function findDayDataById(data: CalendarData[], dayDataId: string) {
   for (const week of data) {
     const dayDataEntry = week.weekData.find(
       (entry) => entry.dayData._id === dayDataId

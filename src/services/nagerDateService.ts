@@ -72,7 +72,7 @@ class NagerDateService {
     try {
       const startYear = startDate.getFullYear();
       const endYear = endDate.getFullYear();
-      endDate = new Date(endDate.setHours(23, 59, 59, 999));
+      endDate.setHours(23, 59, 59, 999);
 
       const years = Array.from(
         { length: endYear - startYear + 1 },
@@ -110,7 +110,11 @@ class NagerDateService {
                 }
                 holidaysByCountry.forEach((holiday) => {
                   try {
-                    const day = new Date(holiday.date);
+                    const day = new Date(startDate);
+                    const hLocalDate = new Date(holiday.date);
+                    day.setFullYear(hLocalDate.getFullYear());
+                    day.setMonth(hLocalDate.getMonth());
+                    day.setDate(hLocalDate.getDate());
                     if (day >= startDate && day <= endDate) {
                       const holidays = AllHolidays.get(holiday.date) || [];
 

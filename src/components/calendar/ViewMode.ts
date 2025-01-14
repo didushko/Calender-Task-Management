@@ -1,8 +1,4 @@
-import {
-  formatDateToString,
-  generateDateGrid,
-  parseStringToDate,
-} from "../../../lib/utils";
+import { generateDateGrid, parseStringToDate } from "../../../lib/utils";
 
 export interface ViewMode {
   value: string;
@@ -33,14 +29,14 @@ const modeList: ViewMode[] = [
     value: "default",
     label: "Month",
     getPrevDate: (date: string) => {
-      const nextDate = parseStringToDate(date);
-      nextDate.setMonth(nextDate.getMonth() - 1);
-      return formatDateToString(nextDate);
+      const d = parseStringToDate(date);
+      d.setMonth(d.getMonth() - 1);
+      return `${d.valueOf()}T${d.getTimezoneOffset()}`;
     },
     getNextDate: (date: string) => {
-      const nextDate = parseStringToDate(date);
-      nextDate.setMonth(nextDate.getMonth() + 1);
-      return formatDateToString(nextDate);
+      const d = parseStringToDate(date);
+      d.setMonth(d.getMonth() + 1);
+      return `${d.valueOf()}T${d.getTimezoneOffset()}`;
     },
     getDisplayDate: (dateStr: string) => {
       const date = parseStringToDate(dateStr);
@@ -52,14 +48,14 @@ const modeList: ViewMode[] = [
     value: "week",
     label: "Week",
     getPrevDate: (date: string) => {
-      const nextDate = parseStringToDate(date);
-      nextDate.setDate(nextDate.getDate() - 7);
-      return formatDateToString(nextDate);
+      const d = parseStringToDate(date);
+      d.setDate(d.getDate() - 7);
+      return `${d.valueOf()}T${d.getTimezoneOffset()}`;
     },
     getNextDate: (date: string) => {
-      const nextDate = parseStringToDate(date);
-      nextDate.setDate(nextDate.getDate() + 7);
-      return formatDateToString(nextDate);
+      const d = parseStringToDate(date);
+      d.setDate(d.getDate() + 7);
+      return `${d.valueOf()}T${d.getTimezoneOffset()}`;
     },
 
     getDisplayDate: (dateStr: string) => {
@@ -73,14 +69,14 @@ const modeList: ViewMode[] = [
     value: "day",
     label: "Day",
     getPrevDate: (date: string) => {
-      const nextDate = parseStringToDate(date);
-      nextDate.setDate(nextDate.getDate() - 1);
-      return formatDateToString(nextDate);
+      const d = parseStringToDate(date);
+      d.setDate(d.getDate() - 1);
+      return `${d.valueOf()}T${d.getTimezoneOffset()}`;
     },
     getNextDate: (date: string) => {
-      const nextDate = parseStringToDate(date);
-      nextDate.setDate(nextDate.getDate() + 1);
-      return formatDateToString(nextDate);
+      const d = parseStringToDate(date);
+      d.setDate(d.getDate() + 1);
+      return `${d.valueOf()}T${d.getTimezoneOffset()}`;
     },
 
     getDisplayDate: (dateStr: string) => {
@@ -88,13 +84,13 @@ const modeList: ViewMode[] = [
       const day = String(date.getDate()).padStart(2, "0");
       return `${day} ${MONTH_NAMES[date.getMonth()]} ${date.getFullYear()}`;
     },
-    getDateGrid: (date: Date) => [
-      [
-        new Date(date.getFullYear(), date.getMonth(), date.getDate() - 1),
-        date,
-        new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1),
-      ],
-    ],
+    getDateGrid: (date: Date) => {
+      const next = new Date(date);
+      next.setDate(next.getDate() + 1);
+      const prev = new Date(date);
+      prev.setDate(prev.getDate() - 1);
+      return [[prev, date, next]];
+    },
   },
 ];
 

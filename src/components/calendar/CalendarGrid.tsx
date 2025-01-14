@@ -1,5 +1,4 @@
-import { getCalendarData, parseStringToDate } from "../../../lib/utils";
-import { ICalendarProps } from "./Calendar";
+import { getCalendarData } from "../../../lib/utils";
 import View from "./View";
 import { getModeByValue } from "./ViewMode";
 
@@ -8,21 +7,19 @@ const CalendarGrid = async ({
   view,
   country,
   search,
-}: ICalendarProps) => {
-  const currentDate = parseStringToDate(date);
-
+}: {
+  date?: string;
+  view?: string;
+  country?: string;
+  search?: string;
+}) => {
   const calendarData = await getCalendarData(
-    currentDate,
+    date,
     getModeByValue(view),
     country,
     search
   );
-  return (
-    <View
-      calendarData={calendarData}
-      currentDate={currentDate}
-      search={search}
-    />
-  );
+
+  return <View calendarData={calendarData} search={search} selectedDateStr={date} />;
 };
 export default CalendarGrid;

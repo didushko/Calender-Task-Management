@@ -8,7 +8,7 @@ import {
   OnDragEndResponder,
 } from "@hello-pangea/dnd";
 import { updateTaskListsAction } from "@/actions/dailyListAction";
-import { findDayDataById } from "../../../lib/utils";
+import { findDayDataById, parseStringToDate } from "../../../lib/utils";
 import toast from "react-hot-toast";
 import { PublicHoliday } from "@/services/nagerDateService";
 
@@ -22,13 +22,14 @@ export interface CalendarData {
 
 const View = ({
   calendarData,
-  currentDate,
+  selectedDateStr,
   search,
 }: {
-  currentDate: Date;
+  selectedDateStr?: string;
   calendarData: CalendarData[];
   search?: string;
 }) => {
+  const selectedDate = parseStringToDate(selectedDateStr);
   const handleDragEnd: OnDragEndResponder = async (results) => {
     const { destination, source } = results;
     if (search) toast.error("Tasks cannot be moved during a search");
@@ -41,7 +42,7 @@ const View = ({
         <thead>
           <tr>
             {calendarData[0].weekData.map((day) => (
-              <th key={day.dayData.date.toDateString()}>
+              <th key={calendarData[0].key + day.key}>
                 {day.dayData.date.toString().split(" ")[0]}
               </th>
             ))}
@@ -52,17 +53,14 @@ const View = ({
             <tr key={week.key}>
               {week.weekData.map((day, i) => (
                 <StyledTd
-                  key={day.key}
+                  key={week.key + day.key}
                   $smallView={week.weekData.length < 6 && i !== 1}
                 >
                   <DayCard
-                    key={day.key}
+                    selectedDate={selectedDate}
+                    key={week.key + day.key}
                     dailyTaskList={day.dayData}
-                    currentMonth={
-                      calendarData.length > 1
-                        ? currentDate.getMonth()
-                        : undefined
-                    }
+                    showCurrentMonth={calendarData.length > 1 ? true : false}
                   />
                 </StyledTd>
               ))}
