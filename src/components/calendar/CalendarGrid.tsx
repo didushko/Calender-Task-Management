@@ -17,6 +17,10 @@ const CalendarGrid = async ({
     country,
     search
   );
+  const forDebug = calendarData.map((week) =>
+    week.weekData.map((day) => day.dayData)
+  );
+  console.log("calendarData", forDebug);
   return (
     <View
       calendarData={calendarData}
