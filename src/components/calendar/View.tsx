@@ -41,7 +41,7 @@ const View = ({
         <thead>
           <tr>
             {calendarData[0].weekData.map((day) => (
-              <th key={day.dayData.date.toDateString()}>
+              <th key={calendarData[0].key + day.key}>
                 {day.dayData.date.toString().split(" ")[0]}
               </th>
             ))}
@@ -52,11 +52,11 @@ const View = ({
             <tr key={week.key}>
               {week.weekData.map((day, i) => (
                 <StyledTd
-                  key={day.key}
+                  key={week.key + day.key}
                   $smallView={week.weekData.length < 6 && i !== 1}
                 >
                   <DayCard
-                    key={day.key}
+                    key={week.key + day.key}
                     dailyTaskList={day.dayData}
                     currentMonth={
                       calendarData.length > 1

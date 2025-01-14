@@ -91,11 +91,16 @@ const getCalendarData = async (
       };
       const holidays = holidaysData?.get(formatDateToString(day)) || [];
 
-      const ids = dayData.tasks.reduce(
-        (add, task) => add + task._id + `${task.priority}`,
-        ""
-      );
-      const key = dayData.date.valueOf() + generateShortHex(ids) + search;
+      const ids =
+        dayData.tasks.reduce(
+          (add, task) => add + task._id + `${task.priority}`,
+          ""
+        ) + holidays.reduce((add, holiday) => add + holiday.name, "");
+      const key =
+        dayData.date.valueOf() +
+        generateShortHex(ids) +
+        viewMode.value +
+        search;
 
       return {
         dayData: { ...dayData, holidays },
@@ -112,10 +117,7 @@ const getCalendarData = async (
   return data;
 };
 
-function findDayDataById(
-  data: CalendarData[],
-  dayDataId: string
-) {
+function findDayDataById(data: CalendarData[], dayDataId: string) {
   for (const week of data) {
     const dayDataEntry = week.weekData.find(
       (entry) => entry.dayData._id === dayDataId
