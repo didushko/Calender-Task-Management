@@ -2,6 +2,10 @@
 
 This is test task - project implements a custom calendar grid with the ability to create, organize, and manage tasks. It includes drag-and-drop functionality, task filtering, and worldwide holiday display.
 
+## Live Demo
+
+You can view the live version of the project [here](https://calender-task-management.vercel.app/).
+
 ## **Task Description**
 
 Create a calendar grid with the ability to create and organize tasks. The calendar must be implemented without using calendar libraries.
