@@ -74,11 +74,10 @@ const TasksListStyled = styled.div`
   align-items: center;
   justify-content: flex-start;
   width: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   height: calc(100% - 25px);
   gap: 5px;
-  scrollbar-color: rgba(10, 27, 220, 0.5) #0072f5;
   border: 1px solid rgba(200, 200, 200, 0.3);
   border-radius: 5px;
   background-image: linear-gradient(
