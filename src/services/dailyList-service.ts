@@ -7,22 +7,16 @@ import logger from "@/logger/logger";
 import TaskModel from "@/database/models/task-model";
 
 class DailyListService extends DatabaseConnection {
-  async getTasks(date: Date) {
-    const list = await dailyTaskListModel.findOne({ date });
-    if (!list) {
-      return null;
-    }
-    return list.toObject();
-  }
-
   async getDailyTaskLists(
     startDate: Date,
     endDate: Date,
     search?: string
   ): Promise<IDailyTaskList[]> {
     try {
-      const start = new Date(startDate.setHours(0, 0, 0, 0));
-      const end = new Date(endDate.setHours(23, 59, 59, 999));
+      const start = new Date(startDate);
+      start.setUTCHours(0, 0, 0, 0);
+      const end = new Date(endDate);
+      end.setUTCHours(23, 59, 59, 999);
 
       const populdateParams: mongoose.PopulateOptions = {
         path: "tasks.task",
@@ -60,7 +54,7 @@ class DailyListService extends DatabaseConnection {
   ) {
     const currentSession = session || (await mongoose.startSession());
     let sessionStarted = false;
-
+    date.setUTCHours(0, 0, 0, 0);
     if (!session) {
       sessionStarted = true;
       currentSession.startTransaction();
@@ -68,7 +62,7 @@ class DailyListService extends DatabaseConnection {
 
     try {
       await dailyTaskListModel.updateOne(
-        { date },
+        { date: date },
         {
           $inc: { "tasks.$[task].priority": 1 },
         },
@@ -260,6 +254,27 @@ class DailyListService extends DatabaseConnection {
       logger.error(`Error update list ${_id} ${String(e)}`);
       return null;
     }
+  }
+
+  async normalizeAndCLear() {
+    await dailyTaskListModel.deleteMany({ tasks: { $size: 0 } });
+    await dailyTaskListModel.updateMany({}, [
+      {
+        $set: {
+          date: {
+            $dateFromParts: {
+              year: { $year: "$date" },
+              month: { $month: "$date" },
+              day: { $dayOfMonth: "$date" },
+              hour: 0,
+              minute: 0,
+              second: 0,
+              millisecond: 0,
+            },
+          },
+        },
+      },
+    ]);
   }
 }
 const dailyListService = new DailyListService();

@@ -172,10 +172,10 @@ const Tooltip = styled.span`
     transparent 1px
   );
   background-size: 100% 22px;
-  transition: visibility 1s, opacity 1s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: visibility 0.2s, opacity 0.2s;
   ${LabelStyled}:hover & {
     visibility: visible;
     opacity: 1;
-    transition: visibility 1s 1s, opacity 2s 1s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: visibility 1s 1s, opacity 1.2s 1s cubic-bezier(0.4, 0, 0.2, 1);
   }
 `;

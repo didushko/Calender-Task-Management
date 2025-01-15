@@ -6,46 +6,54 @@ import { PublicHoliday } from "@/services/nagerDateService";
 
 interface IProps {
   dailyTaskList: IDailyTaskList & { holidays: PublicHoliday[] };
-  currentMonth?: number;
+  showCurrentMonth?: boolean;
+  selectedDate: Date;
 }
 
-const DayCard = ({ dailyTaskList, currentMonth }: IProps) => {
-  const isCurrent =
-    currentMonth !== undefined
-      ? dailyTaskList.date.getMonth() === currentMonth
-      : true;
+const DayCard = ({ dailyTaskList, showCurrentMonth, selectedDate }: IProps) => {
+  const today = new Date();
+  const isCurrentMonth = showCurrentMonth
+    ? dailyTaskList.date.getMonth() === selectedDate.getMonth()
+    : true;
+
   const firstDayAtMonth = new Date(
     dailyTaskList.date.getFullYear(),
     dailyTaskList.date.getMonth(),
     1
   ).getDate();
-  const today = new Date();
-  const currendDay = today.getDate() === dailyTaskList.date.getDate();
-  const currendDate =
-    currendDay && today.getMonth() === dailyTaskList.date.getMonth();
+
+  const isCurrendDate = today.getDate() === dailyTaskList.date.getDate();
+
+  const isToday =
+    isCurrendDate &&
+    today.getMonth() === dailyTaskList.date.getMonth() &&
+    today.getFullYear() === dailyTaskList.date.getFullYear();
+
   const lastDayAtMonth = new Date(
     dailyTaskList.date.getFullYear(),
     dailyTaskList.date.getMonth() + 1,
     0
   ).getDate();
+
   const showMonth =
     dailyTaskList.date.getDate() === firstDayAtMonth ||
     dailyTaskList.date.getDate() === lastDayAtMonth;
+
   return (
-    <ContainerStyled $currentMonth={isCurrent} $currendDay={currendDate}>
+    <ContainerStyled $currentMonth={isCurrentMonth} $currendDay={isToday}>
       <HeaderStyled>
-        <BoldStyled $currentMonth={isCurrent} $currendDay={currendDay}>
+        <BoldStyled $currentMonth={isCurrentMonth} $currendDay={isCurrendDate}>
           {dailyTaskList.date.getDate()}{" "}
           {showMonth && dailyTaskList.date.toString().split(" ")[1]}
         </BoldStyled>
-        {isCurrent && (
+        {
           <SpanStyled>
             {dailyTaskList.tasks?.length > 0 &&
               `Task${dailyTaskList.tasks.length > 1 ? "s" : ""}: ${
                 dailyTaskList?.tasks.length
               }`}
           </SpanStyled>
-        )}
+        }
       </HeaderStyled>
       <TaskList dailyTaskList={dailyTaskList} />
     </ContainerStyled>

@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { formatDateToString, parseStringToDate } from "../../../../lib/utils";
 import { ViewMode } from "../ViewMode";
 import useStateInParam from "@/hooks/useParamChanger";
 
@@ -10,9 +9,10 @@ const NavigationDateSelector = ({
   date?: string;
   viewMode: ViewMode;
 }) => {
+  const d = new Date();
   const [selectedDate, setDate] = useStateInParam(
     "date",
-    formatDateToString(parseStringToDate(date))
+    date || `${d.valueOf()}T${d.getTimezoneOffset()}`
   );
 
   return (

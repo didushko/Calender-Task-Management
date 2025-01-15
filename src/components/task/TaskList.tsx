@@ -64,8 +64,8 @@ const TaskList = ({
 
 const DroppableStyled = styled.div`
   width: 100%;
-  height: 100%;
-  min-height: 40px;
+  flex-grow: 1;
+  padding-bottom: 50px;
 `;
 
 const TasksListStyled = styled.div`
@@ -73,12 +73,10 @@ const TasksListStyled = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  overflow: auto;
   width: 100%;
-  height: calc(100% - 25px);
   overflow-y: scroll;
   overflow-x: hidden;
-  padding: 10px 5px 20px 5px;
+  height: calc(100% - 25px);
   gap: 5px;
   scrollbar-color: rgba(10, 27, 220, 0.5) #0072f5;
   border: 1px solid rgba(200, 200, 200, 0.3);
