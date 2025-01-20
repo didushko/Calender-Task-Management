@@ -26,7 +26,7 @@ export async function addTaskAction(date: Date, title: string) {
   }
 }
 
-export async function editTaskAction(date: Date, task: ITask) {
+export async function editTaskAction(task: ITask) {
   try {
     const updated = await taskService.update(task._id, task.title);
     if (updated) {

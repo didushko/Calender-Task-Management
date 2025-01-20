@@ -47,6 +47,7 @@ export function generateDateGrid(date: Date, weekLimit: number = 6): Date[][] {
   for (let week = 0; week < weekLimit; week++) {
     const weekData = [];
     for (let day = 0; day < 7; day++) {
+      currentDate.setUTCHours(0, 0, 0, 0);
       weekData.push(new Date(currentDate));
       currentDate.setDate(currentDate.getDate() + 1);
     }

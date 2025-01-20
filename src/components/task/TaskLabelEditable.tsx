@@ -42,7 +42,7 @@ const TaskLabelEditable = ({
   const handleSave = async () => {
     setIsEditing(false);
     let res = false;
-    const isSaved = await editTaskAction(date, {
+    const isSaved = await editTaskAction({
       _id: task._id,
       title: text,
     });
