@@ -119,7 +119,8 @@ const BoldStyled = styled.span<{
 }>`
   font-size: large;
   font-weight: bold;
-  padding: 4px;
+  font-size: 16px;
+  margin: 2px;
   font-family: cursive;
   ${(props) =>
     props.$currentMonth
@@ -149,5 +150,5 @@ const HeaderStyled = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 5px;
-  height: 25px;
+  height: 20px;
 `;

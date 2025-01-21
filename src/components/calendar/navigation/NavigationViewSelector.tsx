@@ -34,9 +34,10 @@ const MultitabsStyled = styled.div<{
   display: flex;
   height: auto;
   flex-wrap: wrap;
+  margin: 2px;
   gap: 0px;
   align-items: center;
-  color: #000;
+  color: #464545;
   border: 1px solid rgba(174, 174, 174, 0.3);
   border-radius: 20px;
   :first-child {

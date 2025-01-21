@@ -6,14 +6,16 @@ const HolidayList = ({ holidays }: { holidays: PublicHoliday[] }) => {
   if (holidays.length === 0) return null;
   return (
     <Container>
-      {holidays.map((holiday) => (
-        <HolidayLabelStyled key={holiday.name}>
-          <Label>
-            {holiday.name}
-            <Tooltip>{holiday.name}</Tooltip>
-          </Label>
-        </HolidayLabelStyled>
-      ))}
+      {holidays
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .map((holiday) => (
+          <HolidayLabelStyled key={holiday.name}>
+            <Label>
+              {holiday.name}
+              <Tooltip>{holiday.name}</Tooltip>
+            </Label>
+          </HolidayLabelStyled>
+        ))}
     </Container>
   );
 };
@@ -23,20 +25,28 @@ export default HolidayList;
 const Container = styled.div`
   width: 100%;
   display: flex;
-  min-height: 30px;
+  margin: 2px;
   flex-direction: column;
-  overflow: auto;
-  flex-wrap: wrap;
+  /* overflow: auto; */
   gap: 5px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.5) transparent;
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
 `;
 
 const HolidayLabelStyled = styled.div`
-  margin: 5px 0px;
-  align-items: center;
-  justify-content: space-around;
-  /* min-width: 200px; */
-  width: fit-content;
-  padding: 0px 10px;
+  min-height: fit-content;
+  width: 100%;
+  padding: 2px 10px;
   color: black;
   border-radius: 20px;
   overflow: hidden;
@@ -45,12 +55,13 @@ const HolidayLabelStyled = styled.div`
 `;
 
 const Label = styled.div`
-  line-height: 20px;
+  line-height: 12px;
   vertical-align: middle;
-  height: 20px;
-  min-height: 20px;
+  height: 12px;
+  min-height: 12px;
   background: transparent;
   border: none;
+  font-size: 12px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

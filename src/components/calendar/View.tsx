@@ -123,17 +123,15 @@ export const StyledTd = styled.td<{ $smallView: boolean }>`
 
 export const StyledTable = styled.table`
   width: 100%;
-  height: calc(100dvh - 70px);
-  padding: 0px 10px;
+  height: calc(100%);
   table-layout: fixed;
-  border-spacing: 5px;
+  border-spacing: 2px;
   thead {
     color: #ffffff;
-    font-size: small;
     th {
-      padding: 10px;
       width: calc(100% / 7);
       font-family: ui-monospace;
+      font-size: 14px;
     }
   }
   tbody {
@@ -144,4 +142,11 @@ export const StyledTable = styled.table`
       border-radius: 0px 0px 10px 10px;
     }
   }
+`;
+
+export const StyledCalendarContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100dvw;
+  height: 100dvh;
 `;

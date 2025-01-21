@@ -91,8 +91,17 @@ const TasksListStyled = styled.div`
   overflow-x: hidden;
   height: calc(100% - 25px);
   gap: 0px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.5) transparent;
   &::-webkit-scrollbar {
-    display: none;
+    width: 8px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
   }
 `;
 

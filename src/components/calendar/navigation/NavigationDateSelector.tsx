@@ -52,7 +52,7 @@ const StyledHeaderDate = styled.div`
   width: 200px;
   color: white;
   text-align: center;
-  font-size: large;
+  font-size: inherit;
   font-weight: bold;
 `;
 
@@ -71,7 +71,7 @@ const StyledButtons = styled.button`
 const ChangersStyled = styled.div`
   display: flex;
   gap: 10px;
-  padding: 10px;
+  padding: 0px;
   justify-content: center;
   align-items: center;
   flex-grow: 1;

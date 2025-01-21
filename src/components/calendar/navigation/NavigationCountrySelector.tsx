@@ -35,14 +35,14 @@ const NavigationCountrySelector = ({
 export default NavigationCountrySelector;
 
 const Container = styled.div`
-  padding: 10px;
+  padding: 0px;
 `;
 
 const CountrySelector = styled.select<{
   $loading?: boolean;
 }>`
   cursor: pointer;
-  padding: 5px 10px;
+  padding: 5px;
   border-radius: 25px;
   border: none;
   background-color: #303030;

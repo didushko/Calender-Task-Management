@@ -38,4 +38,5 @@ const AddButtonStyled = styled.button`
   border: none;
   border-radius: 5px;
   padding: 5px;
+  font-size: 10px;
 `;

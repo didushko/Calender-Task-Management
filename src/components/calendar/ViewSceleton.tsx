@@ -25,7 +25,6 @@ const ViewSceleton = () => {
               {week.map((day, i) => (
                 <StyledTd key={i} $smallView={false}>
                   <SceletonDayCard />
-                  <div>d</div>
                 </StyledTd>
               ))}
             </tr>

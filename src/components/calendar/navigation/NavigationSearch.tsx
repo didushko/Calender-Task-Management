@@ -29,8 +29,7 @@ const l3 = keyframes`
 `;
 
 const Container = styled.div<{ $loading?: boolean }>`
-  margin: 10px 50px;
-  display: flex;
+  margin: 0px 50px;
   position: relative;
   ${(props) =>
     props.$loading
@@ -39,7 +38,7 @@ const Container = styled.div<{ $loading?: boolean }>`
             content: " ";
             display: inline-block;
             position: absolute;
-            left: -30px;
+            left: -25px;
             top: 0;
             height: 20px;
             width: 20px;
@@ -60,10 +59,8 @@ const Container = styled.div<{ $loading?: boolean }>`
             content: "🔍";
             display: inline-block;
             position: absolute;
-            left: -25px;
-            top: 0;
-            height: 24px;
-            width: 24px;
+            left: -20px;
+            top: 6px;
           }
         `}
 `;
@@ -75,8 +72,7 @@ const InputStyled = styled.input`
   background: #303030;
   border: 1px solid gray;
   color: #fff;
-  font-size: 16px;
-  font-weight: 500;
+  font-size: inherit;
   width: 100%;
   max-width: 250px;
 `;
