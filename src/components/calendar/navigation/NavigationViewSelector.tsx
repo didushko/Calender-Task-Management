@@ -31,7 +31,6 @@ const MultitabsStyled = styled.div<{
   $loading?: boolean;
 }>`
   cursor: pointer;
-  margin-left: auto;
   display: flex;
   height: auto;
   flex-wrap: wrap;

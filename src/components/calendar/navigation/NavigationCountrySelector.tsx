@@ -45,7 +45,8 @@ const CountrySelector = styled.select<{
   padding: 5px 10px;
   border-radius: 25px;
   border: none;
-  background-color: rgb(3, 45, 111);
+  background-color: #303030;
+  border: 1px solid gray;
   color: #fff;
 `;
 

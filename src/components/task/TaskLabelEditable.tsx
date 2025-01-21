@@ -96,7 +96,7 @@ export default TaskLabelEditable;
 const LabelContainer = styled.div`
   display: flex;
   flex-shrink: 0;
-  margin: 5px 0px;
+  margin: 3px 0px 5px 0px;
   align-items: center;
   justify-content: space-around;
   padding: 0px;

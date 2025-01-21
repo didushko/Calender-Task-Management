@@ -100,17 +100,15 @@ const ContainerStyled = styled.div<{
   ${(props) =>
     props.$currentMonth
       ? css`
-          background-color: #fdfd96;
-          border: 1px solid #f5e79e;
+          background-color: rgb(160, 157, 49);
         `
       : css`
-          background-color: #f4f4d0;
+          background-color: #4c4c4b;
         `}
   ${(props) =>
     props.$currendDay &&
     css`
-      background-color: #f2f23e;
-      border: 2px solid rgba(204, 80, 8, 0.814);
+      background-color: rgb(199, 197, 62);
       border-radius: 0px 5px 10px 10px;
     `}
 `;
@@ -134,14 +132,14 @@ const BoldStyled = styled.span<{
   ${(props) =>
     props.$currendDay &&
     css`
-      color: #f40000;
+      color: #000000;
       font-size: x-large;
       font-weight: bold;
     `}
 `;
 
 const SpanStyled = styled.span`
-  color: #615454;
+  color: #333232;
   font-size: small;
   font-family: math;
 `;

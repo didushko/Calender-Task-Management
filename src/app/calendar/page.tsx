@@ -13,7 +13,10 @@ export default async function CalendarPage({
   };
 }) {
   return (
-    <Suspense fallback={<ViewSceleton />}>
+    <Suspense
+      key={(searchParams.date, searchParams.view, searchParams.country)}
+      fallback={<ViewSceleton />}
+    >
       <Calendar
         date={searchParams.date}
         view={searchParams?.view}

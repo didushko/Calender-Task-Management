@@ -22,6 +22,10 @@ const AddNewTaskLabel = ({
   };
 
   const handleSave = async () => {
+    if (text.length === 0) {
+      cansel();
+      return;
+    }
     const list = await addTaskAction(date, text);
     if (!list) {
       toast.error("Something went wrong, please try again");

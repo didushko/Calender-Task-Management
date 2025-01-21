@@ -7,18 +7,15 @@ body {
 body {
   color: var(--foreground);
 
-  background: rgb(3, 45, 111);
-  background: linear-gradient(
-    90deg,
-    rgba(3, 45, 111, 1) 0%,
-    rgba(5, 33, 77, 1) 50%,
-    rgba(3, 40, 98, 1) 100%
-  );
+  background: #303030;
+  background: linear-gradient(90deg, #303030 0%, #2d2d2d 50%, #303030 100%);
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+body::-webkit-scrollbar {
+  display: none;
+}
 * {
   box-sizing: border-box;
   padding: 0;

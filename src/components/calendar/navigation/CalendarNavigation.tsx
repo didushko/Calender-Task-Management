@@ -29,10 +29,11 @@ export default CalendarNavigation;
 export const StyledNavigation = styled.div`
   display: flex;
   position: relative;
-  justify-content: space-between;
+  justify-content: space-around;
+  flex-wrap: wrap;
   align-items: center;
-  background: rgb(255, 156, 0);
-  background: radial-gradient(circle, #fdc770 0%, #fff200 100%);
-  height: 50px;
-  padding: 0 50px;
+  border-image: linear-gradient(50deg, transparent, gray, transparent) 1;
+  border-width: 0 0 1px 0;
+  border-style: solid;
+  padding: 5px 50px;
 `;

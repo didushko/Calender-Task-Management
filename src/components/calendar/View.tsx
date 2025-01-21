@@ -32,7 +32,10 @@ const View = ({
   const selectedDate = parseStringToDate(selectedDateStr);
   const handleDragEnd: OnDragEndResponder = async (results) => {
     const { destination, source } = results;
-    if (search) toast.error("Tasks cannot be moved during a search");
+    if (search) {
+      toast.error("Tasks cannot be moved during a search");
+      return;
+    }
     if (!destination) return;
     moveTask(calendarData, destination, source);
   };
@@ -93,7 +96,7 @@ async function moveTask(
   });
   if (source.droppableId !== destination.droppableId) {
     targetDay.dayData.tasks.forEach((task, i) => {
-      task.priority = i;
+      if (task?.priority !== undefined) task.priority = i;
     });
   }
 
@@ -103,6 +106,7 @@ async function moveTask(
   ]);
   if (res?.some((res) => !res)) {
     toast.error("Error when move task, please update page to reload data");
+    return;
   }
   return data;
 }
@@ -119,7 +123,7 @@ export const StyledTd = styled.td<{ $smallView: boolean }>`
 
 export const StyledTable = styled.table`
   width: 100%;
-  height: calc(100dvh - 50px);
+  height: calc(100dvh - 70px);
   padding: 0px 10px;
   table-layout: fixed;
   border-spacing: 5px;

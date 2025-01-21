@@ -14,13 +14,18 @@ const TaskList = ({
   dailyTaskList: IDailyTaskList & { holidays: PublicHoliday[] };
 }) => {
   const [taskList, setTaskList] = useState(dailyTaskList.tasks);
+  const updateList = (list: IDailyTaskList["tasks"]) => {
+    list.sort((a, b) => a.priority - b.priority);
+    dailyTaskList.tasks = list;
+    setTaskList(list);
+  };
   return (
     <TasksListStyled>
       <HolidayList holidays={dailyTaskList.holidays} />
       <AddNewTaskButton
         key={taskList.length}
         date={dailyTaskList.date}
-        updateList={setTaskList}
+        updateList={updateList}
       />
       <Droppable droppableId={dailyTaskList._id} type="taskList">
         {(provided) => (
@@ -66,6 +71,14 @@ const DroppableStyled = styled.div`
   width: 100%;
   flex-grow: 1;
   padding-bottom: 50px;
+  border: 1px solid rgba(107, 107, 107, 0.198);
+  border-radius: 5px;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(96, 96, 96, 0.362) 1px,
+    transparent 1px
+  );
+  background-size: 100% 25px;
 `;
 
 const TasksListStyled = styled.div`
@@ -77,15 +90,10 @@ const TasksListStyled = styled.div`
   overflow-y: auto;
   overflow-x: hidden;
   height: calc(100% - 25px);
-  gap: 5px;
-  border: 1px solid rgba(200, 200, 200, 0.3);
-  border-radius: 5px;
-  background-image: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.03) 1px,
-    transparent 1px
-  );
-  background-size: 100% 22px;
+  gap: 0px;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export default TaskList;

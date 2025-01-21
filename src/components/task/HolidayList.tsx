@@ -3,6 +3,7 @@ import { PublicHoliday } from "@/services/nagerDateService";
 import styled from "styled-components";
 
 const HolidayList = ({ holidays }: { holidays: PublicHoliday[] }) => {
+  if (holidays.length === 0) return null;
   return (
     <Container>
       {holidays.map((holiday) => (
@@ -22,6 +23,9 @@ export default HolidayList;
 const Container = styled.div`
   width: 100%;
   display: flex;
+  min-height: 30px;
+  flex-direction: column;
+  overflow: auto;
   flex-wrap: wrap;
   gap: 5px;
 `;
@@ -30,6 +34,8 @@ const HolidayLabelStyled = styled.div`
   margin: 5px 0px;
   align-items: center;
   justify-content: space-around;
+  /* min-width: 200px; */
+  width: fit-content;
   padding: 0px 10px;
   color: black;
   border-radius: 20px;

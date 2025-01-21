@@ -1,11 +1,16 @@
 import useStateInParam from "@/hooks/useParamChanger";
-import styled from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
 const NavigationSearch = () => {
-  const [search, setSearch] = useStateInParam("search");
+  const [search, setSearch, , isLoading] = useStateInParam(
+    "search",
+    undefined,
+    undefined,
+    500
+  );
 
   return (
-    <Container>
+    <Container $loading={isLoading}>
       <InputStyled
         value={search || ""}
         placeholder="Search..."
@@ -17,22 +22,58 @@ const NavigationSearch = () => {
 
 export default NavigationSearch;
 
-const Container = styled.div`
+const l3 = keyframes`
+  to {
+    transform: rotate(1turn);
+  }
+`;
+
+const Container = styled.div<{ $loading?: boolean }>`
   margin: 10px 50px;
   display: flex;
-  &::before {
-    content: "🔍";
-    display: inline-block;
-    height: 24px;
-    width: 24px;
-  }
+  position: relative;
+  ${(props) =>
+    props.$loading
+      ? css`
+          &::before {
+            content: " ";
+            display: inline-block;
+            position: absolute;
+            left: -30px;
+            top: 0;
+            height: 20px;
+            width: 20px;
+            padding: 2px;
+            border-radius: 50%;
+            background: linear-gradient(180deg, blue 0%, yellow 100%);
+            --_m: conic-gradient(#0000 10%, #000),
+              linear-gradient(#000 0 0) content-box;
+            -webkit-mask: var(--_m);
+            mask: var(--_m);
+            -webkit-mask-composite: source-out;
+            mask-composite: subtract;
+            animation: ${l3} 1s infinite linear;
+          }
+        `
+      : css`
+          &::before {
+            content: "🔍";
+            display: inline-block;
+            position: absolute;
+            left: -25px;
+            top: 0;
+            height: 24px;
+            width: 24px;
+          }
+        `}
 `;
 
 const InputStyled = styled.input`
   padding: 5px 10px;
   border-radius: 25px;
   border: none;
-  background: rgb(3, 45, 111);
+  background: #303030;
+  border: 1px solid gray;
   color: #fff;
   font-size: 16px;
   font-weight: 500;

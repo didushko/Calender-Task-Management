@@ -10,6 +10,7 @@ const NavigationDateSelector = ({
   viewMode: ViewMode;
 }) => {
   const d = new Date();
+  d.setHours(0, 0, 0, 0);
   const [selectedDate, setDate] = useStateInParam(
     "date",
     date || `${d.valueOf()}T${d.getTimezoneOffset()}`
@@ -34,6 +35,13 @@ const NavigationDateSelector = ({
       >
         {">>"}
       </StyledButtons>
+      <StyledButtons
+        onClick={() => {
+          setDate(`${d.valueOf()}T${d.getTimezoneOffset()}`);
+        }}
+      >
+        {"Today"}
+      </StyledButtons>
     </ChangersStyled>
   );
 };
@@ -42,7 +50,7 @@ export default NavigationDateSelector;
 
 const StyledHeaderDate = styled.div`
   width: 200px;
-  color: #000;
+  color: white;
   text-align: center;
   font-size: large;
   font-weight: bold;
@@ -55,12 +63,16 @@ const StyledButtons = styled.button`
   border: none;
   background-color: rgb(223, 225, 226);
   color: #000;
+  &:hover {
+    background-color: #838383;
+  }
 `;
 
 const ChangersStyled = styled.div`
   display: flex;
   gap: 10px;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
 `;

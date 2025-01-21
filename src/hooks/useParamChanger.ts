@@ -23,7 +23,9 @@ function useStateInParam(
   const [debaunsedValue, setDebouncedValue] = useState(state);
 
   const isLoading = condition(debaunsedValue)
-    ? paramValue !== debaunsedValue
+    ? debaunsedValue
+      ? paramValue !== debaunsedValue
+      : paramValue !== null
     : paramValue !== null;
 
   useEffect(() => {
@@ -63,7 +65,7 @@ function useStateInParam(
     }
   }, [state, debaunse]);
 
-  return [debaunsedValue, setState, paramValue, isLoading];
+  return [state, setState, paramValue, isLoading];
 }
 
 export default useStateInParam;
