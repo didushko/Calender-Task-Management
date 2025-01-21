@@ -21,7 +21,7 @@ const TaskList = ({
   };
   return (
     <TasksListStyled>
-      <HolidayList holidays={dailyTaskList.holidays} />
+      <HolidayList holidays={dailyTaskList.holidays} day={dailyTaskList.date}/>
       <AddNewTaskButton
         key={taskList.length}
         date={dailyTaskList.date}

@@ -6,12 +6,8 @@ body {
 
 body {
   color: var(--foreground);
-
   background: #303030;
   background: linear-gradient(90deg, #303030 0%, #2d2d2d 50%, #303030 100%);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   scrollbar-width: thin;
   scrollbar-color: rgba(0, 0, 0, 0.5) transparent;
 }

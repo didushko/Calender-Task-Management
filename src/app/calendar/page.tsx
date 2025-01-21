@@ -1,6 +1,4 @@
 import Calendar from "@/components/calendar/Calendar";
-import ViewSceleton from "@/components/calendar/ViewSceleton";
-import { Suspense } from "react";
 
 export default async function CalendarPage({
   searchParams,

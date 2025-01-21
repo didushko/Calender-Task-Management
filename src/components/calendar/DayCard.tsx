@@ -92,7 +92,6 @@ const ContainerStyled = styled.div<{
 }>`
   width: 100%;
   height: 100%;
-  position: relative;
   padding: 5px;
   max-height: calc(100% - 0px);
   overflow: auto;
@@ -100,7 +99,7 @@ const ContainerStyled = styled.div<{
   ${(props) =>
     props.$currentMonth
       ? css`
-          background-color: rgb(160, 157, 49);
+          background-color: #f7d482;
         `
       : css`
           background-color: #4c4c4b;
@@ -108,7 +107,7 @@ const ContainerStyled = styled.div<{
   ${(props) =>
     props.$currendDay &&
     css`
-      background-color: rgb(199, 197, 62);
+      background-color: #e2cb58;
       border-radius: 0px 5px 10px 10px;
     `}
 `;

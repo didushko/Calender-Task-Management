@@ -2,7 +2,13 @@
 import { PublicHoliday } from "@/services/nagerDateService";
 import styled from "styled-components";
 
-const HolidayList = ({ holidays }: { holidays: PublicHoliday[] }) => {
+const HolidayList = ({
+  holidays,
+  day,
+}: {
+  holidays: PublicHoliday[];
+  day: Date;
+}) => {
   if (holidays.length === 0) return null;
   return (
     <Container>
@@ -12,7 +18,7 @@ const HolidayList = ({ holidays }: { holidays: PublicHoliday[] }) => {
           <HolidayLabelStyled key={holiday.name}>
             <Label>
               {holiday.name}
-              <Tooltip>{holiday.name}</Tooltip>
+              <Tooltip $right={day.getDay() === 6}>{holiday.name}</Tooltip>
             </Label>
           </HolidayLabelStyled>
         ))}
@@ -50,7 +56,7 @@ const HolidayLabelStyled = styled.div`
   color: black;
   border-radius: 20px;
   overflow: hidden;
-  background-color: #ff00008c;
+  background-color: #ef476f;
   border: 1px solid red;
 `;
 
@@ -68,24 +74,24 @@ const Label = styled.div`
   cursor: default;
 `;
 
-const Tooltip = styled.span`
+const Tooltip = styled.span<{ $right: boolean }>`
   visibility: hidden;
-  width: 80%;
-  height: 80%;
+  width: 100%;
+  height: 100%;
   background-color: black;
   color: #fff;
   padding: 10%;
   position: absolute;
   z-index: 1;
-  top: 10%;
-  left: 10%;
+  top: 0%;
+  left: ${({ $right }) => ($right ? "-101%" : "101%")};
   opacity: 0;
   overflow: auto;
   border-radius: 10px;
   white-space: normal;
   word-wrap: break-word;
-  background-color: #ff0000f1;
-  border: 1px solid #f5e79e;
+  background-color: #ef476f;
+  border: 1px solid #ef476f;
   color: black;
   background-image: linear-gradient(
     to bottom,

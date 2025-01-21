@@ -83,7 +83,7 @@ const TaskLabelEditable = ({
       ) : (
         <LabelStyled onDoubleClick={handleDoubleClick}>
           {text}
-          <Tooltip>{text}</Tooltip>
+          <Tooltip $right={date.getDay() === 6}>{text}</Tooltip>
         </LabelStyled>
       )}
       <DeleteIcon onClick={handleDelete} />
@@ -96,14 +96,15 @@ export default TaskLabelEditable;
 const LabelContainer = styled.div`
   display: flex;
   flex-shrink: 0;
-  margin: 3px 0px 5px 0px;
+  margin: 2px auto 3px auto;
   align-items: center;
   justify-content: space-around;
   padding: 0px;
-  color: black;
+  color: white;
   border-radius: 20px;
   overflow: hidden;
-  background-color: #006eb7;
+  background-color: #0f7091;
+  border: 1px solid #015b97;
   width: 100%;
 `;
 
@@ -147,35 +148,35 @@ const LabelStyled = styled.div`
   white-space: nowrap;
 `;
 
-const Tooltip = styled.span`
+const Tooltip = styled.span<{ $right: boolean }>`
   visibility: hidden;
-  width: 80%;
-  height: 80%;
-  background-color: black;
+  width: 100%;
+  height: 100%;
   color: #fff;
   padding: 10%;
   position: absolute;
   z-index: 1;
-  top: 10%;
-  left: 10%;
+  top: 0%;
+  left: ${({ $right }) => ($right ? "-101%" : "101%")};
   opacity: 0;
   overflow: auto;
   border-radius: 10px;
   white-space: normal;
   word-wrap: break-word;
-  background-color: #fdfd96;
+  background-color: #0f7091;
   border: 1px solid #030200;
-  color: black;
+  color: white;
   background-image: linear-gradient(
     to bottom,
     rgba(0, 0, 0, 0.03) 1px,
     transparent 1px
   );
   background-size: 100% 22px;
-  transition: visibility 0.2s, opacity 0.2s;
+  transition: visibility 0.1s, opacity 0.1s;
   ${LabelStyled}:hover & {
     visibility: visible;
     opacity: 1;
+    z-index: 2;
     transition: visibility 1s 1s, opacity 1.2s 1s cubic-bezier(0.4, 0, 0.2, 1);
   }
 `;

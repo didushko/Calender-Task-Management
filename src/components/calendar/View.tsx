@@ -138,7 +138,7 @@ export const StyledTable = styled.table`
     tr,
     td {
       border-collapse: collapse;
-      overflow: auto;
+      position: relative;
       border-radius: 0px 0px 10px 10px;
     }
   }
