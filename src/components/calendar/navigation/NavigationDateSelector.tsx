@@ -19,29 +19,27 @@ const NavigationDateSelector = ({
   return (
     <ChangersStyled>
       <StyledButtons
+        $next={false}
         onClick={() => {
           setDate(viewMode.getPrevDate(selectedDate!));
         }}
-      >
-        {"<<"}
-      </StyledButtons>
+      ></StyledButtons>
       <StyledHeaderDate>
         {viewMode.getDisplayDate(selectedDate!)}
       </StyledHeaderDate>
       <StyledButtons
+        $next
         onClick={() => {
           setDate(viewMode.getNextDate(selectedDate!));
         }}
-      >
-        {">>"}
-      </StyledButtons>
-      <StyledButtons
+      ></StyledButtons>
+      <StyledToday
         onClick={() => {
           setDate(`${d.valueOf()}T${d.getTimezoneOffset()}`);
         }}
       >
         {"Today"}
-      </StyledButtons>
+      </StyledToday>
     </ChangersStyled>
   );
 };
@@ -56,7 +54,28 @@ const StyledHeaderDate = styled.div`
   font-weight: bold;
 `;
 
-const StyledButtons = styled.button`
+const StyledButtons = styled.button<{
+  $next: boolean;
+}>`
+  cursor: pointer;
+  border-radius: 5px;
+  width: 25px;
+  height: 25px;
+  border: none;
+  background-color: rgb(223, 225, 226);
+  color: #000;
+  background-image: ${({ $next }) =>
+    $next ? 'url("/arrow_forward.png")' : 'url("/arrow_back.png")'};
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
+  background-position: center;
+  &:hover {
+    background-color: #838383;
+  }
+`;
+
+const StyledToday = styled.button`
   cursor: pointer;
   padding: 5px 10px;
   border-radius: 5px;

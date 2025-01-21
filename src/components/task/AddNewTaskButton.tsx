@@ -23,9 +23,7 @@ const AddNewTaskButton = ({
   }
   return (
     <div>
-      <AddButtonStyled onClick={() => setEdit(true)}>
-        Add new task
-      </AddButtonStyled>
+      <AddButtonStyled onClick={() => setEdit(true)}></AddButtonStyled>
     </div>
   );
 };
@@ -34,9 +32,13 @@ export default AddNewTaskButton;
 
 const AddButtonStyled = styled.button`
   cursor: copy;
-  background-color: green;
+  background-image: url("/edit_square.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
+  background-position: center;
   border: none;
-  border-radius: 5px;
-  padding: 5px;
-  font-size: 10px;
+  background-color: transparent;
+  height: 20px;
+  width: 20px;
 `;

@@ -109,9 +109,10 @@ const LabelContainer = styled.div`
 `;
 
 export const DeleteIcon = styled.div`
-  background-image: url("/deleteIcon.png");
-  width: 15px;
-  height: 15px;
+  width: 20px;
+  height: 20px;
+  background-image: url("/delete_forever.png");
+  border-radius: 50%;
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100%;
@@ -131,7 +132,7 @@ const EditableLabelStyled = styled.input`
   &:focus {
     outline: none;
   }
-  color: black;
+  color: white;
 `;
 
 const LabelStyled = styled.div`

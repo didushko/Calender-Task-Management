@@ -107,7 +107,7 @@ const ContainerStyled = styled.div<{
   ${(props) =>
     props.$currendDay &&
     css`
-      background-color: #e2cb58;
+      background-color: #f7d470;
       border-radius: 0px 5px 10px 10px;
     `}
 `;

@@ -29,9 +29,9 @@ const HolidayList = ({
 export default HolidayList;
 
 const Container = styled.div`
-  width: 100%;
+  width: 98%;
   display: flex;
-  margin: 2px;
+  margin: 4px;
   flex-direction: column;
   /* overflow: auto; */
   gap: 5px;
@@ -53,11 +53,11 @@ const HolidayLabelStyled = styled.div`
   min-height: fit-content;
   width: 100%;
   padding: 2px 10px;
-  color: black;
+  color: white;
   border-radius: 20px;
   overflow: hidden;
   background-color: #ef476f;
-  border: 1px solid red;
+  border: 1px solid #d43e61;
 `;
 
 const Label = styled.div`
@@ -92,7 +92,7 @@ const Tooltip = styled.span<{ $right: boolean }>`
   word-wrap: break-word;
   background-color: #ef476f;
   border: 1px solid #ef476f;
-  color: black;
+  color: white;
   background-image: linear-gradient(
     to bottom,
     rgba(0, 0, 0, 0.03) 1px,

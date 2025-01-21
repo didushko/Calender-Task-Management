@@ -21,7 +21,7 @@ const TaskList = ({
   };
   return (
     <TasksListStyled>
-      <HolidayList holidays={dailyTaskList.holidays} day={dailyTaskList.date}/>
+      <HolidayList holidays={dailyTaskList.holidays} day={dailyTaskList.date} />
       <AddNewTaskButton
         key={taskList.length}
         date={dailyTaskList.date}
@@ -84,7 +84,7 @@ const DroppableStyled = styled.div`
 const TasksListStyled = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
   justify-content: flex-start;
   width: 100%;
   overflow-y: auto;

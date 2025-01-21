@@ -73,7 +73,7 @@ const NewLabelStyled = styled.input`
   &:focus {
     outline: none;
   }
-  color: black;
+  color: white;
 `;
 
 export const LabelContainer = styled.div`
@@ -86,7 +86,7 @@ export const LabelContainer = styled.div`
   color: black;
   border-radius: 20px;
   overflow: hidden;
-  background-color: #0274c0ae;
+  background-color: #127da0;
   border: 1px solid #015b97;
   width: 100%;
 `;
