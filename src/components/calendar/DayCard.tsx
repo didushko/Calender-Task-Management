@@ -96,6 +96,7 @@ const ContainerStyled = styled.div<{
   max-height: calc(100% - 0px);
   overflow: auto;
   font-size: 14px;
+  border-radius: 0px 5px 10px 10px;
   ${(props) =>
     props.$currentMonth
       ? css`
