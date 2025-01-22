@@ -6,45 +6,25 @@ import AddNewTaskButton from "./AddNewTaskButton";
 import { Draggable, Droppable } from "@hello-pangea/dnd";
 import { PublicHoliday } from "@/services/nagerDateService";
 import HolidayList from "./HolidayList";
-import { useOptimistic } from "react";
-import { ITask } from "@/database/models/task-model";
 
 const TaskList = ({
   dailyTaskList,
 }: {
   dailyTaskList: IDailyTaskList & { holidays: PublicHoliday[] };
 }) => {
-  const [optimisticTaskList, setOptimisticTaskList] = useOptimistic(
-    dailyTaskList.tasks.filter((t) => t?.task),
-    (prev, next: ITask & { action: "delete" | "add" }) => {
-      const { action, ...task } = next;
-      if (action === "delete") {
-        return prev.filter((t) => t.task._id !== task._id);
-      }
-      if (action === "add") {
-        return [
-          { _id: "new", task, priority: 0 },
-          ...prev.map((t) => ({ ...t, priority: t.priority + 1 })),
-        ];
-      }
-      return prev;
-    }
-  );
   return (
     <TasksListStyled>
       <HolidayList holidays={dailyTaskList.holidays} day={dailyTaskList.date} />
       <AddNewTaskButton
-        key={optimisticTaskList.length}
+        key={dailyTaskList.tasks.filter((taskL) => taskL.task).length}
         date={dailyTaskList.date}
-        addTask={(task: ITask) => {
-          setOptimisticTaskList({ ...task, action: "add" });
-        }}
       />
       <Droppable droppableId={dailyTaskList._id} type="taskList">
         {(provided) => (
           <DroppableStyled {...provided.droppableProps} ref={provided.innerRef}>
             {provided.placeholder}
-            {optimisticTaskList
+            {dailyTaskList.tasks
+              .filter((taskL) => taskL.task)
               .sort((a, b) => a.priority - b.priority)
               .map((taskL) => (
                 <Draggable
@@ -62,12 +42,6 @@ const TaskList = ({
                         key={taskL._id}
                         task={taskL.task}
                         date={dailyTaskList.date}
-                        deleteItem={(deleteItem: ITask) =>
-                          setOptimisticTaskList({
-                            ...deleteItem,
-                            action: "delete",
-                          })
-                        }
                       />
                     </div>
                   )}

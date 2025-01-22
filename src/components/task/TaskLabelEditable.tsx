@@ -8,11 +8,9 @@ import styled from "styled-components";
 const TaskLabelEditable = ({
   task,
   date,
-  deleteItem,
 }: {
   task: ITask;
   date: Date;
-  deleteItem: (deleteItem: ITask) => void;
 }) => {
   const [text, setText] = useState(task.title);
   const [isEditing, setIsEditing] = useState(false);
@@ -31,7 +29,6 @@ const TaskLabelEditable = ({
       setText(prevText);
       return;
     }
-    deleteItem(task);
     const res = await deleteTaskAction(date, task._id);
     if (!res) {
       toast.error("Something went wrong, please try again");

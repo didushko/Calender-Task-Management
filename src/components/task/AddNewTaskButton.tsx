@@ -2,12 +2,11 @@
 import { useState } from "react";
 import AddNewTaskLabel from "./AddNewTaskLabel";
 import styled from "styled-components";
-import { ITask } from "@/database/models/task-model";
 
-const AddNewTaskButton = ({ date, addTask }: { date: Date, addTask: (newItem: ITask)=>void }) => {
+const AddNewTaskButton = ({ date }: { date: Date }) => {
   const [edit, setEdit] = useState(false);
   if (edit) {
-    return <AddNewTaskLabel date={date} cansel={() => setEdit(false)} addTask={addTask} />;
+    return <AddNewTaskLabel date={date} cansel={() => setEdit(false)} />;
   }
   return (
     <div>
