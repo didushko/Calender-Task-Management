@@ -48,10 +48,10 @@ const DayCard = ({ dailyTaskList, showCurrentMonth, selectedDate }: IProps) => {
         </BoldStyled>
         {
           <SpanStyled>
-            {dailyTaskList.tasks?.length > 0 &&
-              `Task${dailyTaskList.tasks.length > 1 ? "s" : ""}: ${
-                dailyTaskList?.tasks.length
-              }`}
+            {dailyTaskList.tasks?.filter((t) => t?.task).length > 0 &&
+              `Task${
+                dailyTaskList.tasks.filter((t) => t?.task).length > 1 ? "s" : ""
+              }: ${dailyTaskList?.tasks.filter((t) => t?.task).length}`}
           </SpanStyled>
         }
       </HeaderStyled>

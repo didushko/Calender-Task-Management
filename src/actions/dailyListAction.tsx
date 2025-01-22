@@ -4,6 +4,7 @@ import { IDailyTaskList } from "@/database/models/dailyTaskList-model";
 import logger from "@/logger/logger";
 import dailyListService from "@/services/dailyList-service";
 import mongoose from "mongoose";
+import { revalidatePath } from "next/cache";
 
 export async function updateTaskListsAction(taskLists: IDailyTaskList[]) {
   const session = await mongoose.startSession();
@@ -18,6 +19,7 @@ export async function updateTaskListsAction(taskLists: IDailyTaskList[]) {
       results.push(res);
     }
     await session.commitTransaction();
+    revalidatePath("/calendar");
     return results;
   } catch (e: unknown) {
     await session.abortTransaction();

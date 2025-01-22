@@ -1,6 +1,6 @@
 "use client";
 import { addTaskAction } from "@/actions/taskActions";
-import { IDailyTaskList } from "@/database/models/dailyTaskList-model";
+import { ITask } from "@/database/models/task-model";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import styled from "styled-components";
@@ -8,11 +8,11 @@ import styled from "styled-components";
 const AddNewTaskLabel = ({
   date,
   cansel,
-  updateList,
+  addTask
 }: {
   date: Date;
   cansel: () => void;
-  updateList: (list: IDailyTaskList["tasks"]) => void;
+  addTask: (newItem: ITask) => void;
 }) => {
   const [text, setText] = useState("New task");
   const [isLoading, setIsLoading] = useState(false);
@@ -22,15 +22,15 @@ const AddNewTaskLabel = ({
   };
 
   const handleSave = async () => {
+    setIsLoading(true);
     if (text.length === 0) {
       cansel();
       return;
     }
+    addTask({_id: Date.now().toString(), title: text });
     const list = await addTaskAction(date, text);
     if (!list) {
       toast.error("Something went wrong, please try again");
-    } else {
-      updateList(list.tasks);
     }
     setIsLoading(false);
   };

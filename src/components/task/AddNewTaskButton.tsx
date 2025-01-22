@@ -1,25 +1,13 @@
 "use client";
 import { useState } from "react";
 import AddNewTaskLabel from "./AddNewTaskLabel";
-import { IDailyTaskList } from "@/database/models/dailyTaskList-model";
 import styled from "styled-components";
+import { ITask } from "@/database/models/task-model";
 
-const AddNewTaskButton = ({
-  date,
-  updateList,
-}: {
-  date: Date;
-  updateList: (list: IDailyTaskList["tasks"]) => void;
-}) => {
+const AddNewTaskButton = ({ date, addTask }: { date: Date, addTask: (newItem: ITask)=>void }) => {
   const [edit, setEdit] = useState(false);
   if (edit) {
-    return (
-      <AddNewTaskLabel
-        date={date}
-        cansel={() => setEdit(false)}
-        updateList={updateList}
-      />
-    );
+    return <AddNewTaskLabel date={date} cansel={() => setEdit(false)} addTask={addTask} />;
   }
   return (
     <div>

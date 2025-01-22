@@ -5,6 +5,7 @@ import logger from "@/logger/logger";
 import dailyListService from "@/services/dailyList-service";
 import taskService from "@/services/task-service";
 import mongoose from "mongoose";
+import { revalidatePath } from "next/cache";
 
 export async function addTaskAction(date: Date, title: string) {
   const session = await mongoose.startSession();
@@ -13,6 +14,7 @@ export async function addTaskAction(date: Date, title: string) {
     const task = await taskService.add(title);
     if (task) {
       const list = await dailyListService.addTask(date, task._id);
+      revalidatePath("/calendar");
       await session.commitTransaction();
       return list;
     }
@@ -30,8 +32,10 @@ export async function editTaskAction(task: ITask) {
   try {
     const updated = await taskService.update(task._id, task.title);
     if (updated) {
+      revalidatePath("/calendar");
       return updated;
     }
+    return null;
   } catch (e: unknown) {
     logger.error(String(e));
     return null;
@@ -51,7 +55,7 @@ export async function deleteTaskAction(date: Date, taskId: string) {
       throw new Error(`Failed to delete task ${taskId} from list date ${date}`);
     }
     await session.commitTransaction();
-    session.endSession();
+    revalidatePath("/calendar");
     return dailyList;
   } catch (e: unknown) {
     logger.error(String(e));
