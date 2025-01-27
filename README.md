@@ -57,14 +57,14 @@ Create a calendar grid with the ability to:
    npm install
    ```
 
-4. Install dependencies:
+4. Build:
 
    ```bash
-   git clone <repository-url>
+   npm build
    ```
 
-5. Install dependencies:
+5. Run:
 
-```bash
-git clone <repository-url>
-```
+   ```bash
+   npm run
+   ```
